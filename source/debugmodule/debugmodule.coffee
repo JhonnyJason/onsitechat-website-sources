@@ -6,7 +6,7 @@ export modulesToDebug =
     # chatframemodule: true
     # configmodule: true
     # statemodule: true
-    # websocketmodule: true
+    websocketmodule: true
     webrtcmodule: true
 
 addModulesToDebug(modulesToDebug)
