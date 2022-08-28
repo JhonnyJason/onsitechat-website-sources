@@ -369,5 +369,5 @@ export breakAllConnections = ->
         ownDisplayStream = null
     
     webCamBlock.srcObject = null
-    webCamBlock.srcObject = null
+    incomingVideoStreamsBlock.srcObject = null
     return
