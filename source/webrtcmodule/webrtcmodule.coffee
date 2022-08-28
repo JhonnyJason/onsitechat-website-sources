@@ -367,4 +367,7 @@ export breakAllConnections = ->
         trackList = ownDisplayStream.getTracks()
         track.stop() for track in trackList
         ownDisplayStream = null
+    
+    webCamBlock.srcObject = null
+    webCamBlock.srcObject = null
     return
