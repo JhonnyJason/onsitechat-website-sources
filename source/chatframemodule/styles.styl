@@ -1,0 +1,226 @@
+// chatframe styles
+#hidden-templates
+    display none
+
+#chatframe.here
+    transform translateX(0)
+
+#chatframe
+    position fixed
+    z-index 50
+    top 0
+    left 0
+    width 100%
+    height 100%
+    box-sizing: border-box
+    transform translateX(-102%)
+    background #333
+    transition transform 0.3s
+
+#close-button
+    position absolute
+    top 10px
+    right 10px
+    border-radius: 10px
+    padding 5px
+    svg
+        height 25px
+        width 25px
+
+#close-button:hover
+    background-color #dedede77
+
+#hangup-button
+    display: none
+    cursor pointer
+    position absolute
+    bottom 30px
+    left 50%
+    transform translateX(-50%)
+    background-color #dedede77
+    padding 11px 18px
+    border-radius: 20px
+    height: 83px
+    width: 97px
+    box-sizing: border-box
+    svg
+        pointer-events: none
+        height 60px
+        width 60px
+        color: red
+        border-radius 50%
+        border solid 1px white
+        background-color #bababa
+
+#hangup-button.here
+    display block
+
+#my-video-streams-block
+    // display: none
+    display flex
+    position absolute
+    top 15px
+    right 15px
+    width 330px
+    height 110px
+
+#desktop-capture-block
+    width 165px
+    height 110px
+    background-color transparent
+
+#web-cam-block
+    object-fit: cover
+    width 165px
+    height 110px
+    background-color transparent
+    border-radius: 20px
+    background-color #dedede77
+    border solid 1px white
+
+#incoming-video-streams-block
+    object-fit: cover
+    width 100%
+    height 100%
+    overflow hidden
+
+
+#peer-display-block
+    position: absolute
+    bottom 30px
+    right 45px
+
+    .peer-display-element
+        margin-bottom 10px
+        padding 5px 10px
+        width 380px
+        color white
+        background-color #dedede77
+        border-radius: 10px
+        border solid 1px white
+        display flex
+        justify-content: space-around
+        align-items: center
+        svg
+            width 30px
+            height 30px
+        .peer-name-display
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+        .peer-call-button
+            display none
+            padding 5px
+        .peer-video-button
+            padding 5px
+        
+        .click-button[disabled]
+            pointer-events: none
+            color gray
+            opacity: 0.5
+            
+    .peer-display-element.self
+        background-color #4849
+
+#text-chat-block
+    background-color: #dedede77
+    position: absolute
+    bottom 30px
+    left 45px
+    width 280px
+    box-sizing: border-box
+    max-height: calc(100% - 60px)
+    border-radius 20px
+    padding 15px
+    border solid 1px white
+
+#chat-input-block
+    display: block
+    width 100%
+    background-color #dedede77
+    border-radius: 10px
+    border solid 1px white
+    box-sizing: border-box
+
+    input
+        padding: 10px
+        box-sizing: border-box
+        background-color transparent
+        text-align: left
+        width 100%
+        border: none
+        font-size: 13pt
+        color white
+
+    input:focus
+        // padding: 7px
+        background-color #4449
+        border-radius: 10px
+        border none
+
+#chat-history-block
+    display: block
+    display: flex
+    flex-direction: column-reverse
+    width 250px
+    max-height: calc(100vh - 140px)
+    overflow hidden
+
+    .chat-element
+        margin-bottom 10px
+        padding 10px
+        font-size 12pt
+        letter-spacing 0.8pt
+        line-height: 120%
+        border-radius: 30px 30px 30px 0
+        background-color #dedede77
+        width 235px
+        box-sizing: border-box
+    .chat-element.mine
+        margin-bottom 10px
+        padding 10px
+        font-size 12pt
+        letter-spacing 0.8pt
+        line-height: 120%
+        border-radius: 30px 30px 0 30px
+        background-color #dedede77
+        width 235px
+        box-sizing: border-box
+
+    .chat-text
+        overflow: hidden
+        text-overflow: ellipsis
+        text-align: left
+        color cd-flash
+        // color black
+
+    .chat-time
+        display none
+        text-align: right
+        // background-color alpha(cd-flash, 0.6)
+        padding 3px
+        font-size: 7pt
+        color darkgrey
+
+@media screen and (min-width: 600px)
+    // #chat-history-block
+    //     left 250px !important
+
+    // #chat-input-block
+    //     width 50%
+    //     left 40%
+    //     transform none
+
+    #my-video-streams-block
+        right 45px
+        top 35px
+        width 600px
+        height 200px
+
+    #desktop-capture-block 
+        width 300px
+        height 200px
+
+    #web-cam-block
+        width 300px
+        height 200px

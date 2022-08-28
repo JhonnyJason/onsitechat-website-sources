@@ -1,8 +1,12 @@
-debugmodule = {name: "debugmodule", uimodule: false}
+import { addModulesToDebug } from "thingy-debug"
 
 ############################################################
-debugmodule.modulesToDebug = 
+export modulesToDebug = 
     unbreaker: true
-    configmodule: true
+    # chatframemodule: true
+    # configmodule: true
+    # statemodule: true
+    # websocketmodule: true
+    webrtcmodule: true
 
-export default debugmodule
+addModulesToDebug(modulesToDebug)
