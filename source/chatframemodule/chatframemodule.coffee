@@ -77,8 +77,8 @@ sendInputAsMessage = ->
 ############################################################
 pullChatIn = ->
     log "pullChatIn"
-    document.body.style.height = "100vh"
-    document.body.style.overflow = "hidden"
+    document.body.style.height = "100%"
+    document.body.style.overflowY = "hidden"
     chatframe.classList.add("here")
     WS.connect()
     return
@@ -86,7 +86,7 @@ pullChatIn = ->
 pushChatOut = ->
     log "pushChatOut"
     document.body.style.height = "auto"
-    document.body.style.overflow = "scroll"
+    document.body.style.overflowY = "scroll"
     chatframe.classList.remove("here")
     WS.disconnect()
     chatHistoryBlock.innerHTML = ""
