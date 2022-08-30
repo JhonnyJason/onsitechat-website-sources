@@ -15,7 +15,10 @@ chatTemplate = null
 
 
 allChatMessages = []
-maxMessageNr = 64
+maxMessageNr = 12
+deletionIntervalMS = 30000 
+
+myMessages = []
 
 ############################################################
 export initialize = ->
@@ -26,12 +29,39 @@ export initialize = ->
     chatInput.addEventListener("keydown", inputKeyDowned)
     chatInput.addEventListener("blur", inputBlurred)
 
+    opacitySlider.addEventListener("change", opacitySliderChanged)
     hangupButton.addEventListener("click", hangupClicked)
+
+    showPeersButton.addEventListener("click", showPeersButtonClicked)
+    peerDisplayBlock.addEventListener("click", showPeersButtonClicked)
+
+
+    showTextchatButton.addEventListener("click", showTextchatButtonClicked)
+    textChatBlock.addEventListener("click", showTextchatButtonClicked)
+    chatInputBlock.addEventListener("click", (evnt) -> evnt.stopPropagation())
+
+    showWebcamButton.addEventListener("click", showWebcamButtonClicked)    
+    webCamBlock.addEventListener("click", showWebcamButtonClicked)
+
+
+    ##default 
+    # webcam always shown
+    myVideoStreamsBlock.classList.add("here")
+    showWebcamButton.classList.add("is-shown")
+    # peerdisplay always shown
+    peerDisplayBlock.classList.add("here")
+    showPeersButton.classList.add("is-shown")
+    # chat only shown when we are big enough
+    if window.screen.width > 620
+        textChatBlock.classList.add("here")
+        showTextchatButton.classList.add("is-shown")
 
     peerTemplate = peerDisplayTemplate.innerHTML
     log peerTemplate
     chatTemplate = chatElementTemplate.innerHTML
     log chatTemplate
+
+    setInterval(deleteMessage, deletionIntervalMS)
     return
 
 ############################################################
@@ -54,6 +84,7 @@ inputBlurred = (evnt) ->
         chatInput.value = ""
     return
 
+############################################################
 hangupClicked = ->
     log "hangupClicked"
     webRTC.breakAllConnections()
@@ -61,32 +92,70 @@ hangupClicked = ->
     return
 
 ############################################################
-sendInputAsMessage = ->
-    text = chatInput.value
-    message = "to all #{text}"
-    WS.sendMessage(message)
+opacitySliderChanged = ->
+    log "opacitySliderChanged"
+    log opacitySlider.value
+    value = opacitySlider.value / 100
+
+    # chatframe.style.backgroundColor = "rgba(255, 255, 255, "+value+")"
+    incomingVideoStreamsBlock.style.opacity = ""+value
+    return
+
+############################################################
+showPeersButtonClicked = ->
+    log "showPeersButtonClicked"
+    peerDisplayBlock.classList.toggle("here")
+    here = peerDisplayBlock.classList.contains("here")
+    if here and window.screen.width < 620 
+        textChatBlock.classList.remove("here")
+        showTextchatButton.classList.remove("is-shown")
+    if here then showPeersButton.classList.add("is-shown")
+    else showPeersButton.classList.remove("is-shown")
+    return
+
+showTextchatButtonClicked = ->
+    log "showTextchatButtonClicked"
+    textChatBlock.classList.toggle("here")
+    here = textChatBlock.classList.contains("here")
+    if here and window.screen.width < 620 
+        peerDisplayBlock.classList.remove("here")
+        showPeersButton.classList.remove("is-shown")
+    if here then showTextchatButton.classList.add("is-shown")
+    else showTextchatButton.classList.remove("is-shown")
+    return
+
+showWebcamButtonClicked = ->
+    log "showWebcamButtonClicked"
+    myVideoStreamsBlock.classList.toggle("here")
+    here = myVideoStreamsBlock.classList.contains("here")
+    if here then showWebcamButton.classList.add("is-shown")
+    else showWebcamButton.classList.remove("is-shown")
     return
 
 
 
-
-
-
-
+############################################################
+sendInputAsMessage = ->
+    text = chatInput.value
+    message = "to all #{text}"
+    myMessages.push(text)
+    olog myMessages
+    WS.sendMessage(message)
+    return
 
 ############################################################
 pullChatIn = ->
     log "pullChatIn"
-    document.body.style.height = "100%"
-    document.body.style.overflowY = "hidden"
+    # document.body.style.height = "100%"
+    # document.body.style.overflowY = "hidden"
     chatframe.classList.add("here")
     WS.connect()
     return
 
 pushChatOut = ->
     log "pushChatOut"
-    document.body.style.height = "auto"
-    document.body.style.overflowY = "scroll"
+    # document.body.style.height = "auto"
+    # document.body.style.overflowY = "scroll"
     chatframe.classList.remove("here")
     WS.disconnect()
     chatHistoryBlock.innerHTML = ""
@@ -131,6 +200,12 @@ renderChatMessages = ->
     chatHistoryBlock.innerHTML = chatHTML
     return
 
+deleteMessage = ->
+    return unless allChatMessages.length > 0
+    allChatMessages.pop()
+    renderChatMessages()
+    return
+
 ############################################################
 export displayPeers = (uuids) ->
     peersHTML = ""
@@ -150,9 +225,14 @@ export displayPeers = (uuids) ->
     return
 
 
-
 export addChatMessage = (message) ->
     log message
+    for msg,i in myMessages when msg == message
+        isMine = true
+        myMessages.splice(i, 1)
+        break
+
+    olog myMessages
     now = new Date()
     hours = "#{now.getHours()}"
     minutes = "#{now.getMinutes()}"
@@ -161,7 +241,8 @@ export addChatMessage = (message) ->
     timeNow = "#{hours}:#{minutes}"
     cObj = {
         text: message
-        time: timeNow
+        time: timeNow,
+        isMine: isMine
     }
     allChatMessages.unshift(cObj)
     if allChatMessages.length > maxMessageNr then allChatMessages.length = maxMessageNr

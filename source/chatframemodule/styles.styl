@@ -12,10 +12,21 @@
     left 0
     width 100%
     height 100%
+    // pointer-events: none
     box-sizing: border-box
     transform translateX(-102%)
-    background #666
+    background-color transparent
     transition transform 0.3s
+
+input[type=range][orient=vertical]
+    -webkit-appearance: slider-vertical;
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+    position absolute
+    right 5px
+    top 50%
+    transform: translateY(-50%)
 
 #close-button
     position absolute
@@ -34,19 +45,20 @@
     display: none
     cursor pointer
     position absolute
-    bottom 30px
-    left 50%
-    transform translateX(-50%)
+    bottom 10px
+    // right 55px
+    right 50%
+    transform: translateX(50%)
     background-color #dedede77
-    padding 11px 18px
+    padding 5px 12px
     border-radius: 20px
-    height: 83px
-    width: 97px
+    height: 40px
+    width: 54px
     box-sizing: border-box
     svg
         pointer-events: none
-        height 60px
-        width 60px
+        height 29px
+        width 29px
         color: red
         border-radius 50%
         border solid 1px white
@@ -55,19 +67,43 @@
 #hangup-button.here
     display block
 
+#show-webcam-button.is-shown
+    background-color #aaa
+    color white
+
+#show-webcam-button
+    position: absolute
+    top 10px
+    left 10px
+    border-radius: 10px
+    padding 5px
+    background-color #dedede77
+    transition: background-color 0.3s
+    svg
+        height 25px
+        width 25px
+
 #my-video-streams-block
     // display: none
     display flex
     position absolute
-    top 15px
-    right 15px
-    width 330px
+    top 10px
+    right 55px
+    transform translateY(calc(-102% - 10px))
+    // width 330px
+    width 165px
     height 110px
+    transition transform 0.3s
+
+#my-video-streams-block.here
+    transform translateY(0)
+
 
 #desktop-capture-block
     width 165px
     height 110px
     background-color transparent
+    display: none
 
 #web-cam-block
     object-fit: cover
@@ -83,17 +119,38 @@
     width 100%
     height 100%
     overflow hidden
+    background-color white
 
+#show-peers-button.is-shown
+    background-color #aaa
+    color white
+
+#show-peers-button
+    position: absolute
+    bottom 10px
+    right 10px
+    border-radius: 10px
+    padding 5px
+    background-color #dedede77
+    transition background-color 0.3s
+    svg
+        height 25px
+        width 25px
+
+#peer-display-block.here
+    transform translateY(0)
 
 #peer-display-block
     position: absolute
-    bottom 30px
-    right 45px
+    bottom 55px
+    right 55px
+    transform translateY(calc(102% + 55px))
+    transition transform 0.3s
 
     .peer-display-element
-        margin-bottom 10px
-        padding 5px 10px
-        width 380px
+        margin-top 10px
+        padding 2px 0 2px 5px
+        width 250px
         color white
         background-color #dedede77
         border-radius: 10px
@@ -102,8 +159,8 @@
         justify-content: space-around
         align-items: center
         svg
-            width 30px
-            height 30px
+            width 25px
+            height 25px
         .peer-name-display
             overflow: hidden
             text-overflow: ellipsis
@@ -120,26 +177,54 @@
             opacity: 0.5
             
     .peer-display-element.self
-        background-color #4849
+        // background-color #4849
+        background-color #89CFF066
+
+#show-textchat-button.is-shown
+    background-color #aaa
+    color white
+#show-textchat-button
+    position: absolute
+    bottom 10px
+    left 10px
+    border-radius: 10px
+    padding 5px
+    background-color #dedede77
+    transition background-color 0.3s
+    svg
+        height 25px
+        width 25px
+
+#text-chat-block.here
+    transform translateY(0)
+    
 
 #text-chat-block
-    background-color: #dedede77
+    // background-color: #dedede77
     position: absolute
-    bottom 30px
-    left 45px
-    width 280px
+    // bottom 10px
+    // left 55px
+    left 10px
+    bottom 55px
+    width 270px
     box-sizing: border-box
-    max-height: calc(100% - 60px)
-    border-radius 20px
-    padding 15px
-    border solid 1px white
+    max-height: calc(100% - 110px)
+    // border-radius 20px
+    // padding 15px
+    // border solid 1px white
+    // transform translateY(calc(102% + 10px))
+    transform translateY(calc(102% + 55px))
+    transition transform 0.3s
+    overflow hidden
 
 #chat-input-block
     display: block
     width 100%
-    background-color #dedede77
-    border-radius: 10px
-    border solid 1px white
+    background-color #dedede33
+    // border-radius: 10px
+    border solid 1px #dedede
+    border-top none
+    border-left none
     box-sizing: border-box
 
     input
@@ -155,15 +240,14 @@
     input:focus
         // padding: 7px
         background-color #4449
-        border-radius: 10px
+        // border-radius: 10px
         border none
 
 #chat-history-block
-    display: block
     display: flex
     flex-direction: column-reverse
-    width 250px
-    max-height: calc(100vh - 140px)
+    width 260px
+    max-height: calc(100vh - 155px)
     overflow hidden
 
     .chat-element
@@ -174,9 +258,10 @@
         line-height: 120%
         border-radius: 30px 30px 30px 0
         background-color #dedede77
-        width 235px
+        width 245px
         box-sizing: border-box
     .chat-element.mine
+        margin-left 15px
         margin-bottom 10px
         padding 10px
         font-size 12pt
@@ -184,7 +269,7 @@
         line-height: 120%
         border-radius: 30px 30px 0 30px
         background-color #dedede77
-        width 235px
+        width 245px
         box-sizing: border-box
 
     .chat-text
@@ -202,25 +287,64 @@
         font-size: 7pt
         color darkgrey
 
+// @media screen and (min-width: 800px)
+//     // #chat-history-block
+//     //     left 250px !important
+
+//     // #chat-input-block
+//     //     width 50%
+//     //     left 40%
+//     //     transform none
+
+//     #my-video-streams-block
+//         right 45px
+//         bottom 35px
+//         width 600px
+//         height 200px
+
+//     #desktop-capture-block 
+//         width 300px
+//         height 200px
+
 @media screen and (min-width: 600px)
-    // #chat-history-block
-    //     left 250px !important
-
-    // #chat-input-block
-    //     width 50%
-    //     left 40%
-    //     transform none
-
     #my-video-streams-block
-        right 45px
-        top 35px
-        width 600px
-        height 200px
-
-    #desktop-capture-block 
         width 300px
         height 200px
+     #web-cam-block
+         width 300px
+         height 200px
 
-    #web-cam-block
-        width 300px
-        height 200px
+@media screen and (min-width: 350px)
+    #peer-display-block
+        .peer-display-element
+            width 280px
+
+
+@media screen and (min-width: 750px)
+    #peer-display-block
+        .peer-display-element
+            width 380px
+
+
+@media screen and (min-width: 1000px)
+    #hangup-button
+        padding 5px 12px
+        height: 46px
+        width: 60px
+        svg
+            height 35px
+            width 35px
+
+//     // #chat-history-block
+//     //     left 250px !important
+
+//     // #chat-input-block
+//     //     width 50%
+//     //     left 40%
+//     //     transform none
+
+
+//     #desktop-capture-block 
+//         width 300px
+//         height 200px
+
