@@ -132,8 +132,6 @@ showWebcamButtonClicked = ->
     else showWebcamButton.classList.remove("is-shown")
     return
 
-
-
 ############################################################
 sendInputAsMessage = ->
     text = chatInput.value
@@ -162,12 +160,6 @@ pushChatOut = ->
     peerDisplayBlock.innerHTML = ""
     allChatMessages = []
     return
-
-
-
-
-
-
 
 ############################################################
 getUUIDFromTree = (node) ->
